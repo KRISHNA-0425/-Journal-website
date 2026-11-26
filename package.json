@@ -1,0 +1,25 @@
+{
+  "name": "asetr-journal",
+  "version": "1.0.0",
+  "description": "Advances in Science, Engineering and Technology Research - Official Journal Website",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.3.0",
+    "framer-motion": "^14.14.0",
+    "lucide-react": "^1.81.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-router-dom": "^7.18.7",
+    "vite": "^8.3.8"
+  },
+  "dependencies": {
+    "autoprefixer": "^10.7.0",
+    "postcss": "^8.5.33",
+    "tailwindcss": "^3.4.19"
+  }
+}
