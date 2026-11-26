@@ -1,0 +1,343 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ══════════════════════════════════════════════
+   CSS CUSTOM PROPERTIES — DUAL THEME SYSTEM
+   ══════════════════════════════════════════════ */
+:root,
+[data-theme="dark"] {
+  --bg:           #18181B;
+  --surface:      #1F1F23;
+  --elevated:     #27272A;
+  --border:       #3F3F46;
+  --border-soft:  rgba(255,255,255,0.08);
+  --text:         #F4F4F5;
+  --muted:        #A1A1AA;
+  --subtle:       #71717A;
+
+  --accent:       #2563EB;
+  --accent-2:     #0D9488;
+  --accent-3:     #D97706;
+  --accent-4:     #E11D48;
+
+  --glass-bg:     rgba(255,255,255,0.04);
+  --glass-border: rgba(255,255,255,0.09);
+  --glass-hover:  rgba(255,255,255,0.07);
+
+  --shadow-glass: 0 4px 24px rgba(0,0,0,0.4);
+  --dot-color:    rgba(255,255,255,0.06);
+  --grid-line:    rgba(255,255,255,0.065);
+  --surface-grid: rgba(31,31,35,0.72);
+}
+
+[data-theme="light"] {
+  --bg:           #FAF7F2;
+  --surface:      #F5F0E8;
+  --elevated:     #EDE8DC;
+  --border:       #D6CEBF;
+  --border-soft:  rgba(0,0,0,0.08);
+  --text:         #1C1917;
+  --muted:        #57534E;
+  --subtle:       #A8A29E;
+
+  --accent:       #2563EB;
+  --accent-2:     #0D9488;
+  --accent-3:     #D97706;
+  --accent-4:     #E11D48;
+
+  --glass-bg:     rgba(255,255,255,0.55);
+  --glass-border: rgba(0,0,0,0.08);
+  --glass-hover:  rgba(255,255,255,0.75);
+
+  --shadow-glass: 0 4px 24px rgba(0,0,0,0.08);
+  --dot-color:    rgba(0,0,0,0.05);
+  --grid-line:    rgba(28,25,23,0.075);
+  --surface-grid: rgba(245,240,232,0.72);
+}
+
+/* ══════════════════════════════════════════════
+   BASE RESETS
+   ══════════════════════════════════════════════ */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--bg);
+    background-image:
+      linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+    background-size: 48px 48px;
+    background-attachment: fixed;
+    color: var(--text);
+    font-family: Inter, sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Space Grotesk", sans-serif;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: #fff;
+  }
+}
+
+/* ══════════════════════════════════════════════
+   DESIGN TOKENS VIA UTILITY CLASSES
+   ══════════════════════════════════════════════ */
+@layer components {
+
+  /* ── Layout spacing — 4-grid (multiples of 4px) ── */
+  .page-wrapper   { @apply pt-20; }
+  .section-pad    { @apply py-20 md:py-28; }
+  .container-xl   { @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8; }
+
+  /* ── Glassmorphism card ── */
+  .glass {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(12px) saturate(1.4);
+    -webkit-backdrop-filter: blur(12px) saturate(1.4);
+    box-shadow: var(--shadow-glass);
+    border-radius: 8px;
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+  .glass:hover {
+    background: var(--glass-hover);
+  }
+
+  /* ── Solid surface card ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border-soft);
+    border-radius: 8px;
+    transition: background 0.2s ease;
+  }
+
+  /* ── Brutalist accent card ── */
+  .card-accent {
+    background: var(--surface);
+    border: 2px solid var(--accent);
+    border-radius: 4px;
+    box-shadow: 3px 3px 0 var(--accent);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .card-accent:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 var(--accent);
+  }
+
+  /* ── Buttons ── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 24px;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-radius: 4px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    text-decoration: none;
+  }
+
+  .btn-primary {
+    @apply btn;
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+    box-shadow: 3px 3px 0 color-mix(in srgb, var(--accent) 50%, #000);
+  }
+  .btn-primary:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 color-mix(in srgb, var(--accent) 50%, #000);
+  }
+
+  .btn-secondary {
+    @apply btn;
+    background: transparent;
+    color: var(--accent-2);
+    border-color: var(--accent-2);
+    box-shadow: 3px 3px 0 var(--accent-2);
+  }
+  .btn-secondary:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 var(--accent-2);
+    background: color-mix(in srgb, var(--accent-2) 10%, transparent);
+  }
+
+  .btn-ghost {
+    @apply btn;
+    background: transparent;
+    color: var(--text);
+    border-color: var(--border);
+  }
+  .btn-ghost:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 8%, transparent);
+  }
+
+  /* ── Typography helpers ── */
+  .label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+    margin-bottom: 12px;
+  }
+
+  .heading-xl {
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.08;
+  }
+
+  .heading-lg {
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 3vw, 2.5rem);
+    color: var(--text);
+    line-height: 1.15;
+  }
+
+  .body-muted {
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* ── Accent text (solid color, no gradient) ── */
+  .text-accent   { color: var(--accent); }
+  .text-accent-2 { color: var(--accent-2); }
+  .text-accent-3 { color: var(--accent-3); }
+  .text-accent-4 { color: var(--accent-4); }
+
+  /* ── Nav link ── */
+  .nav-link {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+    padding-bottom: 2px;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+  .nav-link:hover,
+  .nav-link.active {
+    color: var(--text);
+    border-bottom-color: var(--accent);
+  }
+
+  /* ── Badge / Tag ── */
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 4px;
+    border: 1px solid var(--border-soft);
+    background: var(--elevated);
+    color: var(--muted);
+  }
+
+  /* ── Form inputs ── */
+  .input {
+    width: 100%;
+    background: var(--elevated);
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    padding: 10px 14px;
+    color: var(--text);
+    font-size: 14px;
+    font-family: Inter, sans-serif;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+  .input::placeholder { color: var(--subtle); }
+  .input:focus { border-color: var(--accent); }
+
+  /* ── Section divider ── */
+  .divider {
+    width: 40px;
+    height: 3px;
+    background: var(--accent);
+    border-radius: 2px;
+    margin: 16px 0;
+  }
+}
+
+/* ══════════════════════════════════════════════
+   DOT GRID BACKGROUND
+   ══════════════════════════════════════════════ */
+.dot-grid {
+  background-image: radial-gradient(circle, var(--dot-color) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* ══════════════════════════════════════════════
+   SCROLLBAR
+   ══════════════════════════════════════════════ */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+/* ══════════════════════════════════════════════
+   THEME TOGGLE BUTTON
+   ══════════════════════════════════════════════ */
+.theme-toggle {
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  border: 1px solid var(--border-soft);
+  background: var(--glass-bg);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--muted);
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.theme-toggle:hover {
+  background: var(--glass-hover);
+  color: var(--text);
+  border-color: var(--border);
+}
+
+/* ══════════════════════════════════════════════
+   PAGE HEADER STRIPE
+   ══════════════════════════════════════════════ */
+.page-header {
+  background: var(--surface-grid);
+  border-bottom: 1px solid var(--border-soft);
+  padding: 80px 0 64px;
+}
+
+/* ══════════════════════════════════════════════
+   STAT COUNTER CARD
+   ══════════════════════════════════════════════ */
+.stat-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  transition: background 0.2s ease;
+}
+.stat-card:hover { background: var(--glass-hover); }
